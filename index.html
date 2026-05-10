@@ -110,6 +110,7 @@
             height: auto;
             margin-bottom: 1.5rem;
             box-shadow: 0 4px 10px rgba(196, 30, 58, 0.3);
+            cursor: pointer;
         }
         .book-title {
             font-size: 1.5rem;
@@ -179,6 +180,38 @@
         .contact-info a:hover {
             text-decoration: underline;
         }
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            justify-content: center;
+            align-items: center;
+        }
+        .lightbox.active {
+            display: flex;
+        }
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            box-shadow: 0 0 30px rgba(196, 30, 58, 0.5);
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            color: #c41e3a;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .lightbox-close:hover {
+            color: #fff;
+        }
         @media (max-width: 768px) {
             h1 {
                 font-size: 2rem;
@@ -202,7 +235,6 @@
     <nav>
         <a href="#accueil">Accueil</a>
         <a href="#catalogue">Catalogue</a>
-        
         <a href="#maison">La Maison</a>
         <a href="#actualites">Actualités</a>
         <a href="#contact">Contact</a>
@@ -263,140 +295,34 @@
         <div class="contact-info">
             <p>Contact : <a href="mailto:editionsleffronte11@gmail.com">editionsleffronte11@gmail.com</a></p>
         </div>
-    </footer> 
-    <style>
-.lightbox {
-    display: none;
-    position: fixed;
-    z-index: 9999;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.95);
-    justify-content: center;
-    align-items: center;
-}
-.lightbox.active {
-    display: flex;
-}
-.lightbox img {
-    max-width: 90%;
-    max-height: 90%;
-    box-shadow: 0 0 30px rgba(196, 30, 58, 0.5);
-}
-.lightbox-close {
-    position: absolute;
-    top: 20px;
-    right: 40px;
-    color: #c41e3a;
-    font-size: 40px;
-    font-weight: bold;
-    cursor: pointer;
-}
-.lightbox-close:hover {
-    color: #fff;
-}
-.book-cover {
-    cursor: pointer;
-}
-</style>
+    </footer>
+    
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+        <img id="lightbox-img" src="" alt="">
+    </div>
 
-<div class="lightbox" id="lightbox">
-    <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
-    <img id="lightbox-img" src="" alt="">
-</div>
-
-<script>
-function openLightbox(src) {
-    document.getElementById('lightbox').classList.add('active');
-    document.getElementById('lightbox-img').src = src;
-}
-
-function closeLightbox() {
-    document.getElementById('lightbox').classList.remove('active');
-}
-
-// Ajouter le clic sur toutes les couvertures
-document.querySelectorAll('.book-cover').forEach(img => {
-    img.addEventListener('click', function() {
-        openLightbox(this.src);
-    });
-});
-
-// Fermer en cliquant en dehors de l'image
-document.getElementById('lightbox').addEventListener('click', function(e) {
-    if (e.target === this) {
-        closeLightbox();
+    <script>
+    function openLightbox(src) {
+        document.getElementById('lightbox').classList.add('active');
+        document.getElementById('lightbox-img').src = src;
     }
-});
-</script>
-<style>
-.lightbox {
-    display: none;
-    position: fixed;
-    z-index: 9999;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.95);
-    justify-content: center;
-    align-items: center;
-}
-.lightbox.active {
-    display: flex;
-}
-.lightbox img {
-    max-width: 90%;
-    max-height: 90%;
-    box-shadow: 0 0 30px rgba(196, 30, 58, 0.5);
-}
-.lightbox-close {
-    position: absolute;
-    top: 20px;
-    right: 40px;
-    color: #c41e3a;
-    font-size: 40px;
-    font-weight: bold;
-    cursor: pointer;
-}
-.lightbox-close:hover {
-    color: #fff;
-}
-.book-cover {
-    cursor: pointer;
-}
-</style>
 
-<div class="lightbox" id="lightbox">
-    <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
-    <img id="lightbox-img" src="" alt="">
-</div>
-
-<script>
-function openLightbox(src) {
-    document.getElementById('lightbox').classList.add('active');
-    document.getElementById('lightbox-img').src = src;
-}
-
-function closeLightbox() {
-    document.getElementById('lightbox').classList.remove('active');
-}
-
-// Ajouter le clic sur toutes les couvertures
-document.querySelectorAll('.book-cover').forEach(img => {
-    img.addEventListener('click', function() {
-        openLightbox(this.src);
-    });
-});
-
-// Fermer en cliquant en dehors de l'image
-document.getElementById('lightbox').addEventListener('click', function(e) {
-    if (e.target === this) {
-        closeLightbox();
+    function closeLightbox() {
+        document.getElementById('lightbox').classList.remove('active');
     }
-});
-</script>
+
+    document.querySelectorAll('.book-cover').forEach(img => {
+        img.addEventListener('click', function() {
+            openLightbox(this.src);
+        });
+    });
+
+    document.getElementById('lightbox').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeLightbox();
+        }
+    });
+    </script>
 </body>
 </html>
